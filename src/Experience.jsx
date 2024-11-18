@@ -25,16 +25,20 @@ export default function Experience() {
         <boxGeometry args={[30, 0.5, 30]} />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
-      <mesh receiveShadow position-y={-1.25}>
-        <boxGeometry args={[10, 0.5, 10]} />
+      <mesh receiveShadow position={[15, 0, 0]}>
+        <boxGeometry args={[1, 3, 30]} />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
-      <mesh receiveShadow position-y={-1.25}>
-        <boxGeometry args={[10, 0.5, 10]} />
+      <mesh receiveShadow position={[-15, 0, 0]}>
+        <boxGeometry args={[1, 3, 30]} />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
-      <mesh receiveShadow position-y={-1.25}>
-        <boxGeometry args={[10, 0.5, 10]} />
+      <mesh receiveShadow position={[0, 0, 15]}>
+        <boxGeometry args={[30, 3, 1]} />
+        <meshStandardMaterial color="greenyellow" />
+      </mesh>
+      <mesh receiveShadow position={[0, 0, -15]}>
+        <boxGeometry args={[30, 3, 1]} />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
     </>

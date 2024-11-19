@@ -1,8 +1,17 @@
 import { Html, OrbitControls } from "@react-three/drei";
 import { Physics, RigidBody } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
+import { useRef } from "react";
 
 export default function Experience() {
+  const playerRef = useRef();
+
+  const handleJump = () => {
+    console.log("clicked");
+    playerRef.current.applyImpulse({ x: 5, y: 15, z: 0 });
+    playerRef.current.applyTorqueImpulse({ x: 5, y: 15, z: 0 });
+  };
+
   return (
     <>
       <Perf position="top-left" />
@@ -43,14 +52,11 @@ export default function Experience() {
           </Html>
         </RigidBody>
 
-        <RigidBody position={[10, 1, 10]}>
-          <mesh castShadow>
+        <RigidBody position={[10, 1, 10]} ref={playerRef}>
+          <mesh castShadow onClick={handleJump}>
             <boxGeometry args={[1, 3, 1]} />
             <meshStandardMaterial color="red" />
           </mesh>
-          <Html transform>
-            <h1 className="text-2xl">Basic player</h1>
-          </Html>
         </RigidBody>
 
         <RigidBody

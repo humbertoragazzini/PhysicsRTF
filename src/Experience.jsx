@@ -1,4 +1,5 @@
 import { OrbitControls } from "@react-three/drei";
+import { Physics, RigidBody } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
 
 export default function Experience() {
@@ -11,36 +12,44 @@ export default function Experience() {
       <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
       <ambientLight intensity={1.5} />
 
-      <mesh castShadow position={[-2, 2, 0]}>
-        <sphereGeometry />
-        <meshStandardMaterial color="orange" />
-      </mesh>
+      <Physics debug>
+        <RigidBody>
+          <mesh castShadow position={[-2, 2, 0]}>
+            <sphereGeometry />
+            <meshStandardMaterial color="orange" />
+          </mesh>
+        </RigidBody>
 
-      <mesh castShadow position={[2, 2, 0]}>
-        <boxGeometry />
-        <meshStandardMaterial color="mediumpurple" />
-      </mesh>
+        <RigidBody>
+          <mesh castShadow position={[2, 2, 0]}>
+            <boxGeometry />
+            <meshStandardMaterial color="mediumpurple" />
+          </mesh>
+        </RigidBody>
 
-      <mesh receiveShadow position-y={-1.25}>
-        <boxGeometry args={[30, 0.5, 30]} />
-        <meshStandardMaterial color="greenyellow" />
-      </mesh>
-      <mesh receiveShadow position={[15, 0, 0]}>
-        <boxGeometry args={[1, 3, 30]} />
-        <meshStandardMaterial color="greenyellow" />
-      </mesh>
-      <mesh receiveShadow position={[-15, 0, 0]}>
-        <boxGeometry args={[1, 3, 30]} />
-        <meshStandardMaterial color="greenyellow" />
-      </mesh>
-      <mesh receiveShadow position={[0, 0, 15]}>
-        <boxGeometry args={[30, 3, 1]} />
-        <meshStandardMaterial color="greenyellow" />
-      </mesh>
-      <mesh receiveShadow position={[0, 0, -15]}>
-        <boxGeometry args={[30, 3, 1]} />
-        <meshStandardMaterial color="greenyellow" />
-      </mesh>
+        <RigidBody type="fixed">
+          <mesh receiveShadow position-y={-1.25}>
+            <boxGeometry args={[30, 0.5, 30]} />
+            <meshStandardMaterial color="greenyellow" />
+          </mesh>
+          <mesh receiveShadow position={[15, 0, 0]}>
+            <boxGeometry args={[1, 3, 30]} />
+            <meshStandardMaterial color="greenyellow" />
+          </mesh>
+          <mesh receiveShadow position={[-15, 0, 0]}>
+            <boxGeometry args={[1, 3, 30]} />
+            <meshStandardMaterial color="greenyellow" />
+          </mesh>
+          <mesh receiveShadow position={[0, 0, 15]}>
+            <boxGeometry args={[30, 3, 1]} />
+            <meshStandardMaterial color="greenyellow" />
+          </mesh>
+          <mesh receiveShadow position={[0, 0, -15]}>
+            <boxGeometry args={[30, 3, 1]} />
+            <meshStandardMaterial color="greenyellow" />
+          </mesh>
+        </RigidBody>
+      </Physics>
     </>
   );
 }

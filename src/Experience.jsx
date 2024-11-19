@@ -36,7 +36,12 @@ export default function Experience() {
           </Html>
         </RigidBody>
 
-        <RigidBody colliders={"ball"} position={[-2, 10, 0]} restitution={1}>
+        <RigidBody
+          colliders={"ball"}
+          position={[-2, 10, 0]}
+          restitution={1}
+          friction={0.7}
+        >
           <mesh castShadow>
             <sphereGeometry />
             <meshStandardMaterial color="orange" />

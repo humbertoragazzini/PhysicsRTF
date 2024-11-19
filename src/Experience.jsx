@@ -33,6 +33,26 @@ export default function Experience() {
           </Html>
         </RigidBody>
 
+        <RigidBody position={[2, 2, 0]}>
+          <mesh castShadow>
+            <boxGeometry args={[25, 1, 1]} />
+            <meshStandardMaterial color="mediumpurple" />
+          </mesh>
+          <Html transform>
+            <h1 className="text-2xl">fix body to hit everyone!!!</h1>
+          </Html>
+        </RigidBody>
+
+        <RigidBody position={[10, 1, 10]}>
+          <mesh castShadow>
+            <boxGeometry args={[1, 3, 1]} />
+            <meshStandardMaterial color="red" />
+          </mesh>
+          <Html transform>
+            <h1 className="text-2xl">Basic player</h1>
+          </Html>
+        </RigidBody>
+
         <RigidBody
           position={[3, 5, 0]}
           rotation={[Math.PI / 8, 0, 0]}
@@ -66,19 +86,19 @@ export default function Experience() {
             <boxGeometry args={[30, 0.5, 30]} />
             <meshStandardMaterial color="greenyellow" />
           </mesh>
-          <mesh receiveShadow position={[15, 0, 0]}>
+          <mesh receiveShadow position={[15, 14, 0]}>
+            <boxGeometry args={[1, 30, 30]} />
+            <meshStandardMaterial color="red" opacity={0.25} transparent />
+          </mesh>
+          <mesh receiveShadow position={[-15, 14, 0]}>
             <boxGeometry args={[1, 30, 30]} />
             <meshStandardMaterial color="greenyellow" />
           </mesh>
-          <mesh receiveShadow position={[-15, 0, 0]}>
-            <boxGeometry args={[1, 30, 30]} />
-            <meshStandardMaterial color="greenyellow" />
-          </mesh>
-          <mesh receiveShadow position={[0, 0, 15]}>
+          <mesh receiveShadow position={[0, 14, 15]}>
             <boxGeometry args={[30, 30, 1]} />
-            <meshStandardMaterial color="greenyellow" />
+            <meshStandardMaterial color="red" opacity={0.25} transparent />
           </mesh>
-          <mesh receiveShadow position={[0, 0, -15]}>
+          <mesh receiveShadow position={[0, 14, -15]}>
             <boxGeometry args={[30, 30, 1]} />
             <meshStandardMaterial color="greenyellow" />
           </mesh>

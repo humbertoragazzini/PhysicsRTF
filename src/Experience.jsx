@@ -16,19 +16,33 @@ export default function Experience() {
     <>
       <Perf position="top-left" />
 
-      <OrbitControls makeDefault />
+      {/* <OrbitControls makeDefault /> */}
 
       <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
       <ambientLight intensity={1.5} />
 
-      <Physics debug>
-        <RigidBody colliders={"ball"} position={[-2, 2, 0]}>
+      <Physics gravity={[0, -15, 0]} debug>
+        <RigidBody
+          colliders={"ball"}
+          position={[-2, 2, 0]}
+          gravityScale={-0.00001}
+        >
           <mesh castShadow>
             <sphereGeometry />
             <meshStandardMaterial color="orange" />
           </mesh>
           <Html transform>
-            <h1 className="text-2xl">ball</h1>
+            <h1 className="text-2xl">ball helio</h1>
+          </Html>
+        </RigidBody>
+
+        <RigidBody colliders={"ball"} position={[-2, 10, 0]} restitution={1}>
+          <mesh castShadow>
+            <sphereGeometry />
+            <meshStandardMaterial color="orange" />
+          </mesh>
+          <Html transform>
+            <h1 className="text-2xl">ball bouncer</h1>
           </Html>
         </RigidBody>
 

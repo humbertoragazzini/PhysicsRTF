@@ -1,5 +1,5 @@
 import { Html, OrbitControls } from "@react-three/drei";
-import { Physics, RigidBody } from "@react-three/rapier";
+import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
 import { useRef } from "react";
 
@@ -51,13 +51,23 @@ export default function Experience() {
           </Html>
         </RigidBody>
 
-        <RigidBody position={[2, 2, 0]}>
+        <RigidBody position={[2, 2, -5]}>
           <mesh castShadow>
             <boxGeometry />
             <meshStandardMaterial color="mediumpurple" />
           </mesh>
           <Html transform>
             <h1 className="text-2xl">default</h1>
+          </Html>
+        </RigidBody>
+
+        <RigidBody position={[2, 2, 0]}>
+          <mesh castShadow>
+            <boxGeometry />
+            <meshStandardMaterial color="mediumpurple" />
+          </mesh>
+          <Html transform>
+            <h1 className="text-2xl">box with mass</h1>
           </Html>
         </RigidBody>
 
@@ -71,7 +81,8 @@ export default function Experience() {
           </Html>
         </RigidBody>
 
-        <RigidBody position={[10, 1, 10]} ref={playerRef}>
+        <RigidBody position={[10, 1, 10]} ref={playerRef} colliders={false}>
+          <CuboidCollider mass={10} args={[0.5, 1.5, 0.5]}></CuboidCollider>
           <mesh castShadow onClick={handleJump}>
             <boxGeometry args={[1, 3, 1]} />
             <meshStandardMaterial color="red" />

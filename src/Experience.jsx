@@ -47,22 +47,24 @@ export default function Experience() {
     }
   });
 
-  useEffect(() => {
-    for (let i = 0; i < countCubes; i++) {
-      const matrix = new THREE.Matrix4();
-      const eulerRotation = new THREE.Euler(0, 0, 0);
-      const quaternion = new THREE.Quaternion();
-      quaternion.setFromEuler(eulerRotation);
-      cubesRef.current.setMatrixAt(
-        i,
-        matrix.compose(
-          new THREE.Vector3(i * 4, 0, 0),
-          quaternion,
-          new THREE.Vector3(2.5, 2.5, 2.5)
-        )
-      );
-    }
-  }, []);
+  // this commented code is an example of how to handle instancedMesh in react three fiber and what to send to the intanced mexsh, like the matrix and the different parameters to the composed
+  // useEffect(() => {
+  //   for (let i = 0; i < countCubes; i++) {
+  //     const matrix = new THREE.Matrix4();
+  //     const eulerRotation = new THREE.Euler(0, 0, 0);
+  //     const quaternion = new THREE.Quaternion();
+  //     quaternion.setFromEuler(eulerRotation);
+  //     cubesRef.current.setMatrixAt(
+  //       i,
+  //       matrix.compose(
+  //         new THREE.Vector3(i * 4, 0, 0),
+  //         quaternion,
+  //         new THREE.Vector3(2.5, 2.5, 2.5)
+  //       )
+  //     );
+  //   }
+  // }, []);
+
   return (
     <>
       <color args={["black"]} attach={"background"}></color>

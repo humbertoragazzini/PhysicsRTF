@@ -1,8 +1,13 @@
 import { Html, OrbitControls, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
+import {
+  CuboidCollider,
+  CylinderCollider,
+  Physics,
+  RigidBody,
+} from "@react-three/rapier";
 import { Perf } from "r3f-perf";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 export default function Experience() {
@@ -12,6 +17,9 @@ export default function Experience() {
     return new Audio("hit.mp3");
   });
   const { nodes } = useGLTF("./hamburger.glb");
+  const countCubes = 3;
+  const cubesRef = useRef();
+
   const handleJump = () => {
     console.log("clicked");
     playerRef.current.applyImpulse({ x: 5, y: 15, z: 0 });
@@ -21,21 +29,29 @@ export default function Experience() {
   const collitionEnter = () => {
     console.log(nodes);
     audio.currentTime = 0;
-    audio.play();
+    // audio.play();
   };
 
   useFrame((state, delta) => {
-    const clock = state.clock.getElapsedTime();
-    const eulerRotation = new THREE.Euler(0, clock * 3, 0);
-    const quaternion = new THREE.Quaternion();
-    const angle = clock;
-    const x = Math.cos(angle) * 2;
-    const y = Math.sin(angle) * 2;
-    quaternion.setFromEuler(eulerRotation);
-    hitterRef.current.setNextKinematicRotation(quaternion);
-    hitterRef.current.setNextKinematicTranslation({ x: x, y: 0.1, z: y });
+    if (hitterRef.current) {
+      const clock = state.clock.getElapsedTime();
+      const eulerRotation = new THREE.Euler(0, clock * 3, 0);
+      const quaternion = new THREE.Quaternion();
+      const angle = clock;
+      const x = Math.cos(angle) * 2;
+      const y = Math.sin(angle) * 2;
+      quaternion.setFromEuler(eulerRotation);
+      hitterRef.current.setNextKinematicRotation(quaternion);
+      hitterRef.current.setNextKinematicTranslation({ x: x, y: 0.1, z: y });
+    }
   });
 
+  useEffect(() => {
+    for (let i = 0; i < countCubes; i++) {
+      const matrix = new THREE.Matrix4();
+      cubesRef.current.setMatrixAt(i, matrix);
+    }
+  }, []);
   return (
     <>
       <color args={["black"]} attach={"background"}></color>
@@ -64,7 +80,8 @@ export default function Experience() {
         </RigidBody>
 
         {/* object exported with blender */}
-        <RigidBody position={[0, 15, 0]}>
+        <RigidBody position={[0, 15, 0]} colliders={false}>
+          <CylinderCollider mass={2} args={[2, 5, 5]}></CylinderCollider>
           <primitive object={nodes.Scene}></primitive>
         </RigidBody>
 
@@ -192,6 +209,12 @@ export default function Experience() {
             <meshStandardMaterial color="greenyellow" />
           </mesh>
         </RigidBody>
+
+        {/* this is a instanceMesh a performant way to include multiple instance of a same object, we pass to the args null,null, because this are our geometry and material, but because we are going to use declarative mode we do not include them here, but because we are sending the amount of intances we need to say null anyway so we send the counter */}
+        <instancedMesh ref={cubesRef} args={[null, null, countCubes]}>
+          <boxGeometry args={[0.5, 0.5, 0.5]}></boxGeometry>
+          <meshStandardMaterial color={"blue"}></meshStandardMaterial>
+        </instancedMesh>
       </Physics>
     </>
   );

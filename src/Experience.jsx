@@ -16,7 +16,7 @@ export default function Experience() {
 
   useFrame((state, delta) => {
     const clock = state.clock.getElapsedTime();
-    const eulerRotation = new THREE.Euler(0, clock, 0);
+    const eulerRotation = new THREE.Euler(0, clock * 3, 0);
     const quaternion = new THREE.Quaternion();
     quaternion.setFromEuler(eulerRotation);
     hitterRef.current.setNextKinematicRotation(quaternion);
@@ -49,7 +49,7 @@ export default function Experience() {
         <RigidBody
           colliders={"ball"}
           position={[-2, 10, 0]} // NEVER ANIMATE THE POSITION AND THE ROTATION OF A RIGIDBODY, THIS COULD CREATE A ISSUE IN THE PHYSICS
-          restitution={1}
+          restitution={0.5}
           friction={0.7}
         >
           <mesh castShadow>

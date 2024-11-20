@@ -24,7 +24,7 @@ Here we have physics done with rapier: [PhysicsRTF](https://humbertoragazzini.gi
 
 1. Go to my github main page and login in.
 
-2. Select the repository, in this case :[Git Hub Repository](https://github.com/humbertoragazzini/PhysicsRTF).
+2. Select the repository, in this case :[Git Hub Repository](https://github.com/humbertoragazzini/PhysicsRTF/dist).
 3. In this tab select settings.
 4. Click in pages in the option menu.
 5. Select in source branch master.

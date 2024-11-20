@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
 import { useRef } from "react";
+import * as THREE from "three";
 
 export default function Experience() {
   const playerRef = useRef();
@@ -14,7 +15,11 @@ export default function Experience() {
   };
 
   useFrame((state, delta) => {
-    hitterRef.current.setNext;
+    const clock = state.clock.getElapsedTime();
+    const eulerRotation = new THREE.Euler(0, clock, 0);
+    const quaternion = new THREE.Quaternion();
+    quaternion.setFromEuler(eulerRotation);
+    hitterRef.current.setNextKinematicRotation(quaternion);
   });
 
   return (
@@ -59,9 +64,10 @@ export default function Experience() {
         <RigidBody
           type="kinematicPosition"
           friction={0}
-          position={[0, 0.25, 0]}
+          position={[0, 0, 0]}
+          ref={hitterRef}
         >
-          <mesh ref={hitterRef} castShadow receiveShadow>
+          <mesh castShadow receiveShadow>
             <boxGeometry args={[18, 0.5, 0.5]}></boxGeometry>
             <meshStandardMaterial color={"blue"}></meshStandardMaterial>
 

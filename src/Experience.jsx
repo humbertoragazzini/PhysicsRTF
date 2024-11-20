@@ -1,16 +1,21 @@
 import { Html, OrbitControls } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
 import { useRef } from "react";
 
 export default function Experience() {
   const playerRef = useRef();
-
+  const hitterRef = useRef();
   const handleJump = () => {
     console.log("clicked");
     playerRef.current.applyImpulse({ x: 5, y: 15, z: 0 });
     playerRef.current.applyTorqueImpulse({ x: 5, y: 15, z: 0 });
   };
+
+  useFrame((state, delta) => {
+    hitterRef.current.setNext;
+  });
 
   return (
     <>
@@ -38,7 +43,7 @@ export default function Experience() {
 
         <RigidBody
           colliders={"ball"}
-          position={[-2, 10, 0]}
+          position={[-2, 10, 0]} // NEVER ANIMATE THE POSITION AND THE ROTATION OF A RIGIDBODY, THIS COULD CREATE A ISSUE IN THE PHYSICS
           restitution={1}
           friction={0.7}
         >
@@ -49,6 +54,21 @@ export default function Experience() {
           <Html transform>
             <h1 className="text-2xl">ball bouncer</h1>
           </Html>
+        </RigidBody>
+
+        <RigidBody
+          type="kinematicPosition"
+          friction={0}
+          position={[0, 0.25, 0]}
+        >
+          <mesh ref={hitterRef} castShadow receiveShadow>
+            <boxGeometry args={[18, 0.5, 0.5]}></boxGeometry>
+            <meshStandardMaterial color={"blue"}></meshStandardMaterial>
+
+            <Html transform>
+              <h1 className="text-2xl">fix body to hit everyone!!!</h1>
+            </Html>
+          </mesh>
         </RigidBody>
 
         <RigidBody position={[2, 2, -5]}>
@@ -71,14 +91,11 @@ export default function Experience() {
           </Html>
         </RigidBody>
 
-        <RigidBody position={[2, 2, 0]}>
+        <RigidBody position={[-4, 2, 0]}>
           <mesh castShadow>
-            <boxGeometry args={[25, 1, 1]} />
+            <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color="mediumpurple" />
           </mesh>
-          <Html transform>
-            <h1 className="text-2xl">fix body to hit everyone!!!</h1>
-          </Html>
         </RigidBody>
 
         <RigidBody position={[10, 1, 10]} ref={playerRef} colliders={false}>

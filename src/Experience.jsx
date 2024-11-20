@@ -1,4 +1,4 @@
-import { Html, OrbitControls } from "@react-three/drei";
+import { Html, OrbitControls, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
@@ -11,7 +11,7 @@ export default function Experience() {
   const [audio] = useState(() => {
     return new Audio("hit.mp3");
   });
-
+  const { nodes } = useGLTF("./hamburger.glb");
   const handleJump = () => {
     console.log("clicked");
     playerRef.current.applyImpulse({ x: 5, y: 15, z: 0 });
@@ -19,6 +19,7 @@ export default function Experience() {
   };
 
   const collitionEnter = () => {
+    console.log(nodes);
     audio.currentTime = 0;
     audio.play();
   };
@@ -37,6 +38,7 @@ export default function Experience() {
 
   return (
     <>
+      <color args={["black"]} attach={"background"}></color>
       <Perf position="top-left" />
 
       <OrbitControls makeDefault />
@@ -59,6 +61,11 @@ export default function Experience() {
           <Html transform>
             <h1 className="text-2xl">ball helio</h1>
           </Html>
+        </RigidBody>
+
+        {/* object exported with blender */}
+        <RigidBody position={[0, 15, 0]}>
+          <primitive object={nodes.Scene}></primitive>
         </RigidBody>
 
         {/* this ball have small friction and resitution so bounce and bounce */}

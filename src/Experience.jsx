@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import {
   CuboidCollider,
   CylinderCollider,
+  InstancedRigidBodies,
   Physics,
   RigidBody,
 } from "@react-three/rapier";
@@ -49,7 +50,17 @@ export default function Experience() {
   useEffect(() => {
     for (let i = 0; i < countCubes; i++) {
       const matrix = new THREE.Matrix4();
-      cubesRef.current.setMatrixAt(i, matrix);
+      const eulerRotation = new THREE.Euler(0, 0, 0);
+      const quaternion = new THREE.Quaternion();
+      quaternion.setFromEuler(eulerRotation);
+      cubesRef.current.setMatrixAt(
+        i,
+        matrix.compose(
+          new THREE.Vector3(i * 4, 0, 0),
+          quaternion,
+          new THREE.Vector3(2.5, 2.5, 2.5)
+        )
+      );
     }
   }, []);
   return (
@@ -210,11 +221,13 @@ export default function Experience() {
           </mesh>
         </RigidBody>
 
-        {/* this is a instanceMesh a performant way to include multiple instance of a same object, we pass to the args null,null, because this are our geometry and material, but because we are going to use declarative mode we do not include them here, but because we are sending the amount of intances we need to say null anyway so we send the counter */}
-        <instancedMesh ref={cubesRef} args={[null, null, countCubes]}>
-          <boxGeometry args={[0.5, 0.5, 0.5]}></boxGeometry>
-          <meshStandardMaterial color={"blue"}></meshStandardMaterial>
-        </instancedMesh>
+        <InstancedRigidBodies>
+          {/* this is a instanceMesh a performant way to include multiple instance of a same object, we pass to the args null,null, because this are our geometry and material, but because we are going to use declarative mode we do not include them here, but because we are sending the amount of intances we need to say null anyway so we send the counter */}
+          <instancedMesh ref={cubesRef} args={[null, null, countCubes]}>
+            <boxGeometry></boxGeometry>
+            <meshStandardMaterial color={"blue"}></meshStandardMaterial>
+          </instancedMesh>
+        </InstancedRigidBodies>
       </Physics>
     </>
   );

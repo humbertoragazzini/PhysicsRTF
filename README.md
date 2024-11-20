@@ -1,4 +1,4 @@
-# RaginSea MiniProject - Humberto Ragazzini
+# PhysicsRTF MiniProject - Humberto Ragazzini
 
 Here we have physics done with rapier: [The Raging Sea](https://humbertoragazzini.github.io/PhysicsRTF/dist/)
 

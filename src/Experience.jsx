@@ -8,7 +8,7 @@ import {
   RigidBody,
 } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 export default function Experience() {
@@ -18,7 +18,7 @@ export default function Experience() {
     return new Audio("hit.mp3");
   });
   const { nodes } = useGLTF("./hamburger.glb");
-  const countCubes = 3;
+  const countCubes = 500;
   const cubesRef = useRef();
 
   const handleJump = () => {
@@ -65,6 +65,22 @@ export default function Experience() {
   //   }
   // }, []);
 
+  const instances = useMemo(() => {
+    const instances = [];
+    for (let i = 0; i < countCubes; i++) {
+      instances.push({
+        key: "instance_" + i,
+        position: [
+          (Math.random() - 0.5) * 15,
+          5 + i * 0.5,
+          (Math.random() - 0.5) * 15,
+        ],
+        rotation: [0, 0, 0],
+      });
+    }
+    return instances;
+  }, []);
+
   return (
     <>
       <color args={["black"]} attach={"background"}></color>
@@ -76,7 +92,7 @@ export default function Experience() {
       <ambientLight intensity={1.5} />
 
       {/* this is our physics world done in rapier */}
-      <Physics gravity={[0, -15, 0]} debug>
+      <Physics gravity={[0, -15, 0]}>
         {/* Rigid body let us add physic to the mesh, in this case simulating helio with a gravity  scale of -0.000001 */}
         <RigidBody
           colliders={"ball"}
@@ -223,7 +239,7 @@ export default function Experience() {
           </mesh>
         </RigidBody>
 
-        <InstancedRigidBodies>
+        <InstancedRigidBodies instances={instances}>
           {/* this is a instanceMesh a performant way to include multiple instance of a same object, we pass to the args null,null, because this are our geometry and material, but because we are going to use declarative mode we do not include them here, but because we are sending the amount of intances we need to say null anyway so we send the counter */}
           <instancedMesh ref={cubesRef} args={[null, null, countCubes]}>
             <boxGeometry></boxGeometry>

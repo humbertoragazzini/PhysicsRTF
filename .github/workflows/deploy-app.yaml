@@ -1,0 +1,36 @@
+# name of the action
+name: Deploy 
+# when trigger
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+# persmissions
+permissions:
+  contents: write
+# jobs
+jobs:
+  run-deploy-app:
+    runs-on: ubuntu-latest
+    # steps
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get Nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: "18.x"
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+      - name: Build Project
+        run: npm run build
+      - name: Check Files
+        run: ls -al
+      - name: Deply to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

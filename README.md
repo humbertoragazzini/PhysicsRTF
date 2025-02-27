@@ -1,6 +1,6 @@
 # PhysicsRTF MiniProject - Humberto Ragazzini
 
-Here we have physics done with rapier: [PhysicsRTF](https://humbertoragazzini.github.io/PhysicsRTF/dist/)
+Here we have physics done with rapier: [PhysicsRTF](https://humbertoragazzini.github.io/PhysicsRTF/)
 
 # **Frameworks and Tecnologies**
 
@@ -28,7 +28,7 @@ Here we have physics done with rapier: [PhysicsRTF](https://humbertoragazzini.gi
 3. In this tab select settings.
 4. Click in pages in the option menu.
 5. Select in source branch master.
-6. Save, the project is deployed in github pages in the following link:[PhysicsRTF](https://humbertoragazzini.github.io/PhysicsRTF/dist/)
+6. Save, the project is deployed in github pages in the following link:[PhysicsRTF](https://humbertoragazzini.github.io/PhysicsRTF/)
 
 ## **To clone my repository in github**
 
